@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Doraemon Fan Website"
+description = "A playful, scroll-worthy Doraemon fan website made by Ankit Kumar, with character information, story highlights, favorite gadgets, and a welcoming fan experience."
+version = "1.0.0"
+id = "artifacts/doraemon-fan-site"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19088
+
+[services.development]
+run = "pnpm --filter @workspace/doraemon-fan-site run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/doraemon-fan-site", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/doraemon-fan-site/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19088"
+BASE_PATH = "/"
