@@ -6,29 +6,17 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { mockupPreviewPlugin } from "./mockupPreviewPlugin";
 
 const isProduction = process.env.NODE_ENV === "production";
-
-// Fallback to port 5173 if PORT is missing during a production build
 const rawPort = process.env.PORT || (isProduction ? "5173" : undefined);
 
 if (!rawPort) {
-  throw new Error(
-    "PORT environment variable is required but was not provided.",
-  );
+  throw new Error("PORT environment variable is required.");
 }
 
 const port = Number(rawPort);
-
-if (Number.isNaN(port) || port <= 0) {
-  throw new Error(`Invalid PORT value: "${rawPort}"`);
-}
-
-// Fallback to root "/" if BASE_PATH is missing during a production build
 const basePath = process.env.BASE_PATH || (isProduction ? "/" : undefined);
 
 if (!basePath) {
-  throw new Error(
-    "BASE_PATH environment variable is required but was not provided.",
-  );
+  throw new Error("BASE_PATH environment variable is required.");
 }
 
 export default defineConfig({
@@ -63,4 +51,3 @@ export default defineConfig({
     allowedHosts: true,
   },
 });
-
